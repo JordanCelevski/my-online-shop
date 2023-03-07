@@ -27,7 +27,6 @@ const firebaseConfig = {
   storageBucket: "my-online-shop-db-ac7a1.appspot.com",
   messagingSenderId: "371045932955",
   appId: "1:371045932955:web:24df1dc23e2eee971b4b3e"
-
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -68,13 +67,7 @@ export const getCategoriesAndDocuments = async () => {
   const q = query(collectionRef);
 
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
-
-  return categoryMap;
+  return querySnapshot.docs.map((doc) => doc.data());
 };
 
 export const createUserDocumentFromAuth = async (
